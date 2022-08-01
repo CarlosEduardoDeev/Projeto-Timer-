@@ -1,4 +1,5 @@
 import { Play } from 'phosphor-react'
+import {useForm} from 'react-hook-form'
 
 import {
   HomeContainer,
@@ -11,13 +12,34 @@ import {
 } from './style'
 
 export function Home() {
+
+  const {register,handleSubmit} = useForm()
+
+  function handleSubmit(event){
+    event.target.task.value
+
+  }
+  
   return (
     <HomeContainer>
-      <form>
+      <form onSubmit={handleSubmit}>
         <FormContainer>
-          <label>Vou trabalhar em</label>
+          <label htmlFor='task'>Vou trabalhar em</label>
 
-          <TaskInput id="task" placeholder="Dê um nome para o seu projeto" />
+          <TaskInput
+           list='task-suggestions'          
+           id="task" 
+           placeholder="Dê um nome para o seu projeto"
+           {...register('task')}
+            />
+
+           <datalist id ="task-suggestions">
+              <option value="projeto 1"/>
+              <option value="projeto 1"/>
+              <option value="projeto 1"/>
+              <option value="projeto 1"/>
+
+           </datalist>
 
           <label htmlFor="">durante</label>
 
@@ -25,6 +47,9 @@ export function Home() {
             type="number"
             id="minutesAmount"
             placeholder="00"
+            step={5}
+            min={5}
+            max={60}
           />
           <span>minutos.</span>
         </FormContainer>

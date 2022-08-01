@@ -1,3 +1,4 @@
+import { Student } from 'phosphor-react'
 import styled from 'styled-components'
 
 export const HomeContainer = styled.main`
@@ -6,7 +7,6 @@ export const HomeContainer = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   form {
     display: flex;
     flex-direction: column;
@@ -29,7 +29,7 @@ export const FormContainer = styled.div`
 
 export const CountdownContainer = styled.div`
   font-family: 'Roboto Mono', monospace;
-  font-size: 10rem;
+  font-size:11rem;
   line-height: 8rem;
   color: ${(props) => props.theme['gray-100']};
   display: flex;
@@ -62,20 +62,49 @@ export const StartCounterDownButton = styled.button`
   gap: 0.5rem;
   font-weight: bold;
   cursor: pointer;
-  background-color: ${props => props.theme['green-500']};
-  color: ${props => props.theme['gray-100']};
+  background-color: ${(props) => props.theme['green-500']};
+  color: ${(props) => props.theme['gray-100']};
 
-  &:hover{
-    background-color: ${props => props.theme['green-300']};
+  &:hover {
+    background-color: ${(props) => props.theme['green-300']};
   }
 
-  &:disabled{
+  &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
   }
-  &:not(:disabled):hover{
-    background-color: ${props => props.theme['green-700']};
+  &:not(:disabled):hover {
+    background-color: ${(props) => props.theme['green-700']};
+  }
+`
+
+const BaseInput = styled.input`
+  background: transparent;
+  height: 2.5rem;
+  border: 0;
+  border-bottom: 2px solid ${(props) => props.theme['gray-500']};
+  font-weight: bold;
+  font-size: 1.125rem;
+  padding: 0 0.5rem;
+  flex-wrap: wrap;
+  color: ${(props) => props.theme['gray-100']};
+
+  &:focus{
+    box-shadow: none;
+    border-color: ${props => props.theme['green-500']} ;
+  }
+
+  &::placeholder{
+    color: ${props =>props.theme['gray-500']
   }
 
 
+`
+
+export const TaskInput = styled(BaseInput)`
+  flex: 1;
+`
+
+export const MinutesAmountInput = styled(BaseInput)`
+  width: 4rem;
 `

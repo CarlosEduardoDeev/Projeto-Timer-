@@ -29,7 +29,7 @@ export const FormContainer = styled.div`
 
 export const CountdownContainer = styled.div`
   font-family: 'Roboto Mono', monospace;
-  font-size:11rem;
+  font-size: 11rem;
   line-height: 8rem;
   color: ${(props) => props.theme['gray-100']};
   display: flex;
@@ -91,12 +91,11 @@ const BaseInput = styled.input`
 
   &:focus{
     box-shadow: none;
-    border-color: ${props => props.theme['green-500']} ;
+    border-color: ${(props) => props.theme['green-500']} ;
   }
 
   &::placeholder{
-    color: ${props =>props.theme['gray-500']
-  }
+    color: ${(props) => props.theme['gray-500']}
 
 
 `
@@ -104,7 +103,7 @@ const BaseInput = styled.input`
 export const TaskInput = styled(BaseInput)`
   flex: 1;
 
-  &::-webkit-calendar-picker-indicator{
+  &::-webkit-calendar-picker-indicator {
     display: none !important;
   }
 `

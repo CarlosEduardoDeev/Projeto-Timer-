@@ -12,33 +12,45 @@ import {
   TaskInput,
   MinutesAmountInput,
 } from './style'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
+import { differenceInSeconds } from 'date-fns'
+
+
+
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, 'Informe a tarefa'),
   minutesAmount: zod.number().min(5).max(60),
 })
 
-
 interface Cycle {
-  id:string
-  task:string
+  id: string
+  task: string
   minutesAmount: number
- 
-
+  startDate: Date
 }
-
-
-
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home() {
 
-  const [cycles,setCycles] = useState<Cycle[]>([])
-  const [activeCycleId,setActiveCycleId] = useState<string | null> (null)
-  const [amountSecondsPassed,setAmountSecondsPassed] = useState(0)
 
+  const [cycles, setCycles] = useState<Cycle[]>([])
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
+
+  
+  const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
+
+  useEffect(() =>{
+    if(activeCycle){
+      setInterval(() =>{
+        setAmountSecondsPassed(
+          differenceInSeconds(new Date(), activeCycle.startDate)
+          )
+      },1000)
+    }
+  },[activeCycle])
 
   const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
@@ -48,34 +60,32 @@ export function Home() {
     },
   })
 
-
-
   function handleCreateNewCycle(data: NewCycleFormData) {
+    const id = String(new Date().getTime())
 
-    const id = String(new Date().getTime());
-
-    const newCycle:Cycle = {
+    const newCycle: Cycle = {
       id,
       task: data.task,
       minutesAmount: data.minutesAmount,
+      startDate: new Date(),
     }
 
-    setCycles((state) => [...state,newCycle])
+    setCycles((state) => [...state, newCycle])
     setActiveCycleId(id)
 
     reset()
   }
 
-  const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
-  
+ 
+
   const totalsecond = activeCycle ? activeCycle.minutesAmount * 60 : 0
-  const currentSeconds = activeCycle ? totalsecond - amountSecondsPassed :0
+  const currentSeconds = activeCycle ? totalsecond - amountSecondsPassed : 0
 
   const minutesAmount = Math.floor(currentSeconds / 60)
   const secondsAmount = currentSeconds % 60
 
-  const minutes = String(minutesAmount).padStart(2,'0')
-  const seconds = String(secondsAmount).padStart(2,'0')
+  const minutes = String(minutesAmount).padStart(2, '0')
+  const seconds = String(secondsAmount).padStart(2, '0')
 
   console.log(activeCycle)
   const task = watch('task')

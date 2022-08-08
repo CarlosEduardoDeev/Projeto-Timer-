@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 
+
+
 import {
   HomeContainer,
   StartCounterDownButton,
@@ -13,10 +15,7 @@ import { differenceInSeconds } from 'date-fns'
 import { NewCycleForm } from './Components/NewCyleForm'
 import { Countdown } from './Components/Countdown'
 
-const newCycleFormValidationSchema = zod.object({
-  task: zod.string().min(1, 'Informe a tarefa'),
-  minutesAmount: zod.number().min(1).max(60),
-})
+
 
 interface Cycle {
   id: string
@@ -27,63 +26,22 @@ interface Cycle {
   finishiedDate?: Date
 }
 
-type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home() {
   const [cycles, setCycles] = useState<Cycle[]>([])
   const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
-  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
 
   
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
+
+
+
+
+
+
+
   
-  const totalsecond = activeCycle ? activeCycle.minutesAmount * 60 : 0
-
-
-  useEffect(() => {
-    let interval: number
-
-    if (activeCycle) {
-      interval = setInterval(() => {
-        const secondsDifference = differenceInSeconds(
-          new Date(),
-          activeCycle.startDate,
-        )
-
-        if (secondsDifference >= totalsecond) {
-          setCycles((state) =>
-            state.map((cycle) => {
-              if (cycle.id === activeCycleId) {
-                return { ...cycle, finishiedDate: new Date() }
-              } else {
-                return cycle
-              }
-            }),
-          )
-
-          setAmountSecondsPassed(totalsecond)
-
-          clearInterval(interval)
-        } else {
-          setAmountSecondsPassed(secondsDifference)
-        }
-      }, 1000)
-    }
-    return () => {
-      clearInterval(interval)
-    }
-  }, [activeCycle, activeCycleId])
-
-
-
-  const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
-    resolver: zodResolver(newCycleFormValidationSchema),
-    defaultValues: {
-      task: '',
-      minutesAmount: 0,
-    },
-  })
 
   function handleCreateNewCycle(data: NewCycleFormData) {
     const id = String(new Date().getTime())
@@ -136,10 +94,9 @@ export function Home() {
   return (
     <HomeContainer>
       <form onSubmit={handleSubmit(handleCreateNewCycle)}>
-       <NewCycleForm/>
-       <Countdown/>
+        <NewCycleForm />
 
-        
+        <Countdown />
         {activeCycle ? (
           <StopCounterDownButton onClick={handleInterruptCycle} type="button">
             <HandPalm size={24} />

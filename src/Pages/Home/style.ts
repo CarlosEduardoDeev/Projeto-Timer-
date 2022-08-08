@@ -1,4 +1,3 @@
-import { Student } from 'phosphor-react'
 import styled from 'styled-components'
 
 export const HomeContainer = styled.main`
@@ -73,7 +72,6 @@ export const BaseCounterDownButton = styled.button`
     opacity: 0.7;
     cursor: not-allowed;
   }
- 
 `
 
 const BaseInput = styled.input`
@@ -87,18 +85,17 @@ const BaseInput = styled.input`
   flex-wrap: wrap;
   color: ${(props) => props.theme['gray-100']};
 
-  &:focus{
+  &:focus {
     box-shadow: none;
-    border-color: ${(props) => props.theme['green-500']} ;
+    border-color: ${(props) => props.theme['green-500']};
   }
 
-  &::placeholder{
-    color: ${(props) => props.theme['gray-500']}
-
-
+  &::placeholder {
+    color: ${(props) => props.theme['gray-500']};
+  }
 `
 
-  export const TaskInput = styled(BaseInput)`
+export const TaskInput = styled(BaseInput)`
   flex: 1;
 
   &::-webkit-calendar-picker-indicator {
@@ -116,19 +113,18 @@ export const StopCounterDownButton = styled(BaseCounterDownButton)`
 
   &:not(:disabled):hover {
     background-color: ${(props) => props.theme['red-700']};
-
-    &:hover { 
-    background-color: ${(props) => props.theme['red-300']}; 
   }
-
+    &:hover {
+      background-color: ${(props) => props.theme['red-500']};
+    }
+  }
 `
 
 export const StartCounterDownButton = styled(BaseCounterDownButton)`
-background-color: ${(props) => props.theme['green-500']};
+  background-color: ${(props) => props.theme['green-500']};
   color: ${(props) => props.theme['gray-100']};
 
   &:not(:disabled):hover {
     background-color: ${(props) => props.theme['red-700']};
   }
-
 `

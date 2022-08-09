@@ -1,61 +1,47 @@
-import { useForm } from "react-hook-form";
-import { FormContainer, MinutesAmountInput, TaskInput } from "./style";
-import * as zod from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { FormContainer, MinutesAmountInput, TaskInput } from './style'
+import { CyclesContext } from '../..'
+import { useContext } from 'react'
+import { useFormContext } from 'react-hook-form'
 
-const newCycleFormValidationSchema = zod.object({
-  task: zod.string().min(1, 'Informe a tarefa'),
-  minutesAmount: zod
-  .number()
-  .min(1)
-  .max(60),
-})
+// eslint-disable-next-line react-hooks/rules-of-hooks
 
-type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+export function NewCycleForm() {
+  const { activeCycle } = useContext(CyclesContext)
 
+  const { register } = useFormContext()
 
-const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
-  resolver: zodResolver(newCycleFormValidationSchema),
-  defaultValues: {
-    task: '',
-    minutesAmount: 0,
-  },
-})
-
-
-export function NewCycleForm(){
-    return(
+  return (
     <FormContainer>
-        <label htmlFor="task">Vou trabalhar em</label>
+      <label htmlFor="task">Vou trabalhar em</label>
 
-        <TaskInput
-          list="task-suggestions"
-          id="task"
-          placeholder="Dê um nome para o seu projeto"
-          {...register('task')}
-          disabled={!!activeCycle}
-        />
+      <TaskInput
+        list="task-suggestions"
+        id="task"
+        placeholder="Dê um nome para o seu projeto"
+        {...register('task')}
+        disabled={!!activeCycle}
+      />
 
-        <datalist id="task-suggestions">
-          <option value="projeto 1" />
-          <option value="projeto 1" />
-          <option value="projeto 1" />
-          <option value="projeto 1" />
-        </datalist>
+      <datalist id="task-suggestions">
+        <option value="projeto 1" />
+        <option value="projeto 1" />
+        <option value="projeto 1" />
+        <option value="projeto 1" />
+      </datalist>
 
-        <label htmlFor="">durante</label>
+      <label htmlFor="">durante</label>
 
-        <MinutesAmountInput
-          type="number"
-          id="minutesAmount"
-          placeholder="00"
-          step={5}
-          min={1}
-          max={60}
-          disabled={!!activeCycle}
-          {...register('minutesAmount', { valueAsNumber: true })}
-        />
-        <span>minutos.</span>
-      </FormContainer>
-    )
+      <MinutesAmountInput
+        type="number"
+        id="minutesAmount"
+        placeholder="00"
+        step={5}
+        min={1}
+        max={60}
+        disabled={!!activeCycle}
+        {...register('minutesAmount', { valueAsNumber: true })}
+      />
+      <span>minutos.</span>
+    </FormContainer>
+  )
 }

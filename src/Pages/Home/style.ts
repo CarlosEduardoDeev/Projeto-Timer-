@@ -124,6 +124,6 @@ export const StartCounterDownButton = styled(BaseCounterDownButton)`
   color: ${(props) => props.theme['gray-100']};
 
   &:not(:disabled):hover {
-    background-color: ${(props) => props.theme['red-700']};
+    background-color: ${(props) => props.theme['green-700']};
   }
 `

@@ -3,9 +3,10 @@ import { CyclesContext } from '../../Contexts/CycleContext'
 
 import { useContext } from 'react'
 import { formatDistanceToNow } from 'date-fns'
-import ptBR from 'date-fns/esm/locale/pt-BR/index.js'
+import ptBR from 'date-fns/locale/pt-BR'
 
 export function History() {
+  
   const { cycles } = useContext(CyclesContext)
   return (
     <HistoryContainer>

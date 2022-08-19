@@ -6,7 +6,6 @@ import { DefaultLayout } from './src/Layouts/DefaultLayout'
 export function Router() {
   return (
     <Routes>
-
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/History" element={<History />} />

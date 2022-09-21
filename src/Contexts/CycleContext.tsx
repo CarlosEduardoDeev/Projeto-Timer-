@@ -1,17 +1,18 @@
+/* eslint-disable prettier/prettier */
+import differenceInSeconds from 'date-fns/differenceInSeconds'
 import {
   createContext,
   ReactNode,
   useEffect,
   useReducer,
-  useState,
+  useState
 } from 'react'
-import { Cycle, cyclesReducer } from '../reducers/cycles/reducer'
 import {
   addNewCycleAction,
   interruptCurrentCycleAction,
-  markCurrentCycleAsFinishedAction,
+  markCurrentCycleAsFinishedAction
 } from '../reducers/cycles/actions'
-import differenceInSeconds from 'date-fns/differenceInSeconds'
+import { Cycle, cyclesReducer } from '../reducers/cycles/reducer'
 
 interface CreateCycleData {
   task: string
@@ -44,15 +45,7 @@ export function CyclesContextProvider({
       cycles: [],
       activeCycleId: null,
     },
-    () => {
-      const storedStateAsJson = localStorage.getItem(
-        '@ignite-timer:cycles-state-1.0.0',
-      )
-
-      if (storedStateAsJson) {
-        return JSON.parse(storedStateAsJson)
-      }
-    },
+    
   )
 
   const { cycles, activeCycleId } = cyclesState
